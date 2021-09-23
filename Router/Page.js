@@ -4,6 +4,7 @@ import logoImage from '../public/images/logo.png'
 
 import Counter from '../views/Stock_List/Counter';
 import LayoutMenu from '../Item/LayoutMenu';
+import LoginPage from '../views/Login/LoginPage';
 
 const Page = (props) => {
 
@@ -16,6 +17,8 @@ const Page = (props) => {
         switch (params) {
             case 'Counter':
                 return <Counter />
+            case 'Login':
+                return <LoginPage />
             default: return "ERROR Page"
         }
     }

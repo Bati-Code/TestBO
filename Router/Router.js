@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Page from './Page'
+import Pages from './Page'
 
-import Login from '../views/Login/login'
+import LoginPage from '../views/Login/LoginPage'
 
 const Router = () => {
 
@@ -10,14 +10,14 @@ const Router = () => {
         <>
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" component={Login} />
+                    <Route exact path="/" component={LoginPage} />
 
                     <Switch>
                         <Route path="/:firstPath" render={({location}) => {
 
-                            return(<Page pathname={location.pathname}/>)
+                            return(<Pages pathname={location.pathname}/>)
                         }} />
-                        <Route path="/:firstPath/:secondPath" render={({location}) => <Page path={location.pathname}/>} />
+                        <Route path="/:firstPath/:secondPath" render={({location}) => <Pages path={location.pathname}/>} />
                     </Switch>
                 </Switch>
             </BrowserRouter>
