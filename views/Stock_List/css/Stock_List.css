@@ -1,0 +1,11 @@
+#content #search_label{
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+#content #search_label #search_form > span{
+    margin-left: 5px;
+}
+

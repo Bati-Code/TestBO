@@ -1,0 +1,50 @@
+#root{
+    background-color: #fffefe;
+    height: 100%;
+    width: 100%;
+}
+
+#header{
+    display: flex;
+    width: 100%;
+    min-height: 80px;
+    border-bottom: 2.3px solid;
+    border-color: #f0f0f0;
+}
+
+#header #logo{
+    width: 16.5%;
+    border-right: 2.3px solid;
+    border-color: #f0f0f0;
+    padding: 5px;
+    text-align: center;
+}
+
+#header #headerMenu{
+    padding: 5px;
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#container #body{
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+}
+
+#container #body #side{
+    flex-basis: 20%;
+    min-height: 100%;
+    background-color: #001529;
+}
+
+#container #body #content{
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+}
+

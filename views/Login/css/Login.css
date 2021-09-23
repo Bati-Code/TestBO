@@ -1,0 +1,32 @@
+#header{
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+    font-size: 30px;
+}
+
+#container{
+    display: flex;
+    width: 100%;
+}
+
+#container #content{
+    width: 80%;
+}
+
+#container #content #search_label{
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+#search_form > span{
+    margin-left: 5px;
+}
+
+#container #side{
+    background-color: white;
+    flex-basis: 10%;
+}
+
