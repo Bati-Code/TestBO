@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Pages from './Page'
 
 import LoginPage from '../views/Login/LoginPage'
+import RegisterPage from '../views/Register/RegisterPage'
 
 const Router = () => {
 
@@ -11,6 +12,8 @@ const Router = () => {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/" component={LoginPage} />
+                    <Route exact path="/Register" component={RegisterPage} />
+
 
                     <Switch>
                         <Route path="/:firstPath" render={({location}) => {

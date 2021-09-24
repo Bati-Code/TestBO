@@ -12,6 +12,7 @@
 		"antd": "^4.16.13",
 		"axios": "^0.21.4",
 		"babel-loader": "^8.2.2",
+		"bcryptjs": "^2.4.3",
 		"css-loader": "^6.0.0",
 		"less-loader": "^10.0.1",
 		"path": "^0.12.7",
@@ -33,6 +34,9 @@
 		"postcss-loader": "^6.1.1",
 		"webpack-cli": "^4.7.2",
 		"webpack-dev-server": "^3.11.2"
+	},
+	"browser": {
+		"crypto": false
 	},
 	"babel": {
 		"presets": [

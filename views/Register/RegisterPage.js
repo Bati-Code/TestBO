@@ -1,32 +1,30 @@
-import React, { useState } from "react";
-import './css/LoginCSS.css'
+import React from "react";
+import './css/RegisterCSS.css'
 import LogoImage from '../../public/images/logo.png';
 import HiTalkImage from '../../public/images/hitalk_logo.png'
 import axios from "axios";
 
 import { Address_Config } from "../Data/Config/Config";
-import { Encrypt_Login } from "../Util/Encrypt";
-import { set_JSON_State_Data } from "../Util/CommonUtil";
+import { Encrypt_Register } from "../Util/Encrypt";
 
 const LoginPage = () => {
 
-    const initLoginData = {
+    const loginData = {
         id: '',
         pw: ''
     }
 
-    const [getLoginData, setLoginData] = useState(initLoginData);
-
-    const loginData_Handler = (e) => {
+    const RegisterData_Handler = (e) => {
         console.log(e.target.value);
-        set_JSON_State_Data(getLoginData, setLoginData, {[e.target.name]: e.target.value});
+
+        loginData[e.target.name] = e.target.value;
+
+        console.log(loginData);
     }
 
-    const loginButton_Handler = () => {
+    const RegisterButton_Handler = () => {
         console.log("Click");
-        Encrypt_Login(getLoginData);
-
-        set_JSON_State_Data(getLoginData, setLoginData, {pw: ''}); //비밀번호 초기화
+        Encrypt_Register(loginData);
     }
 
 
@@ -48,17 +46,17 @@ const LoginPage = () => {
                         <div>
                             <div id="loginArea_ID">
                                 <div id="inputArea_ID">
-                                    <input id="inputBox_ID" name="id" value={getLoginData.id}
-                                        type="text" placeholder="아이디" onChange={loginData_Handler} autoFocus></input>
+                                    <input id="inputBox_ID" name="id"
+                                        type="text" placeholder="아이디" onChange={RegisterData_Handler} autoFocus></input>
                                 </div>
                             </div>
                             <div id="loginArea_PW">
                                 <div id="inputArea_PW">
-                                    <input id="inputBox_PW" name="pw" value={getLoginData.pw}
-                                        type="password" onChange={loginData_Handler} placeholder="패스워드" ></input>
+                                    <input id="inputBox_PW" name="pw"
+                                        type="password" onChange={RegisterData_Handler} placeholder="패스워드" ></input>
                                 </div>
                             </div>
-                            <button id="loginButton" onClick={loginButton_Handler}>로그인</button>
+                            <button id="loginButton" onClick={RegisterButton_Handler}>회원가입</button>
                         </div>
                     </div>
                     <div id="side">
