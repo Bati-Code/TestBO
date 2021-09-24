@@ -31,7 +31,7 @@ const LoginPage = () => {
     return (
         <>
             <div id="wrap">
-                <div id="container">
+                <div id="login_container">
                     <div id="side">
                     </div>
                     <div id="login_content">

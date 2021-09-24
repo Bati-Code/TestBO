@@ -13,10 +13,9 @@
 }
 
 #header #logo{
-    width: 16.5%;
+    width: 20%;
     border-right: 2.3px solid;
     border-color: #f0f0f0;
-    padding: 5px;
     text-align: center;
 }
 
@@ -32,14 +31,14 @@
 
 #container #body{
     display: flex;
-    width: 100%;
+    width: 80%;
     min-height: 100%;
 }
 
 #container #body #side{
-    flex-basis: 20%;
     min-height: 100%;
     background-color: #001529;
+    width: 20%;
 }
 
 #container #body #content{
