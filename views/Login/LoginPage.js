@@ -7,6 +7,7 @@ import axios from "axios";
 import { Address_Config } from "../Data/Config/Config";
 import { Encrypt_Login } from "../Util/Encrypt";
 import { set_JSON_State_Data } from "../Util/CommonUtil";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
 
@@ -24,7 +25,15 @@ const LoginPage = () => {
 
     const loginButton_Handler = () => {
         console.log("Click");
-        Encrypt_Login(getLoginData);
+        const login_result = Encrypt_Login(getLoginData);
+        console.log("Login E", login_result);
+
+        if(login_result === true){
+            console.log("T");
+        }
+        else{
+            console.log("F")
+        }
 
         set_JSON_State_Data(getLoginData, setLoginData, {pw: ''}); //비밀번호 초기화
     }
@@ -34,7 +43,7 @@ const LoginPage = () => {
         <>
             <div id="wrap">
                 <div id="login_container">
-                    <div id="side">
+                    <div id="login_side">
                     </div>
                     <div id="login_content">
                         <div id="login_header">
@@ -60,8 +69,11 @@ const LoginPage = () => {
                             </div>
                             <button id="loginButton" onClick={loginButton_Handler}>로그인</button>
                         </div>
+                        <div id="login_footer">
+                            <Link to = "Register">회원가입</Link>
+                        </div>
                     </div>
-                    <div id="side">
+                    <div id="login_side">
                     </div>
 
                 </div>

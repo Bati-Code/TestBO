@@ -21,17 +21,19 @@
 
 #header #headerMenu{
     padding: 5px;
+    width: 80%;
 }
 
 #container{
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
 }
 
 #container #body{
     display: flex;
-    width: 80%;
+    width: 100%;
     min-height: 100%;
 }
 
@@ -42,7 +44,7 @@
 }
 
 #container #body #content{
-    width: 100%;
+    width: 80%;
     margin: 5px;
     padding: 5px;
 }

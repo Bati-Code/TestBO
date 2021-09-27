@@ -32,7 +32,7 @@ const LoginPage = () => {
         <>
             <div id="wrap">
                 <div id="login_container">
-                    <div id="side">
+                    <div id="login_side">
                     </div>
                     <div id="login_content">
                         <div id="login_header">
@@ -59,7 +59,7 @@ const LoginPage = () => {
                             <button id="loginButton" onClick={RegisterButton_Handler}>회원가입</button>
                         </div>
                     </div>
-                    <div id="side">
+                    <div id="login_side">
                     </div>
 
                 </div>
