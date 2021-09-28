@@ -1,7 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
-import { CounterState, CounterSelector } from '../../atom/testAtom'
 import { Table } from 'antd';
 
 import './css/Stock_List.css'
@@ -16,8 +14,6 @@ const Counter = () => {
 
     const [getData, setData] = useState([]);
     const [getSearchValue, setSearchValue] = useState(initSearch);
-    const [getCount, setCount] = useRecoilState(CounterState);
-    const CountSelector = useRecoilValue(CounterSelector);
 
 
     useEffect(() => {

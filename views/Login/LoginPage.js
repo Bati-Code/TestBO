@@ -7,7 +7,8 @@ import axios from "axios";
 import { Address_Config } from "../Data/Config/Config";
 import { Encrypt_Login } from "../Util/Encrypt";
 import { set_JSON_State_Data } from "../Util/CommonUtil";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
 
@@ -17,6 +18,8 @@ const LoginPage = () => {
     }
 
     const [getLoginData, setLoginData] = useState(initLoginData);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const loginData_Handler = (e) => {
         console.log(e.target.value);
@@ -25,19 +28,16 @@ const LoginPage = () => {
 
     const loginButton_Handler = () => {
         console.log("Click");
-        const login_result = Encrypt_Login(getLoginData);
-        console.log("Login E", login_result);
+        const result = Encrypt_Login(getLoginData, dispatch);
 
-        if(login_result === true){
-            console.log("T");
-        }
-        else{
-            console.log("F")
-        }
+        result.then((result) => {
+            console.log("Promise result", result);
+            if(result)
+                history.push("/Counter");
+            });
 
-        set_JSON_State_Data(getLoginData, setLoginData, {pw: ''}); //비밀번호 초기화
+            set_JSON_State_Data(getLoginData, setLoginData, {pw: ''}); //비밀번호 초기화
     }
-
 
     return (
         <>
