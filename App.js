@@ -29,7 +29,7 @@ import { Interceptor } from './views/Data/Interceptor/Interceptor'
 
 
 
-const App = async () => {
+const App = () => {
 
 	//InterceptorA(axios);
 
