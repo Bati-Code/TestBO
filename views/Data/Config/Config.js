@@ -6,3 +6,10 @@ export const Address_Config = {
 
 }
 
+export const Error_Code = {
+
+    Access_Token_Expried_Error: 601,
+    Refresh_Token_Expried_Error: 611,
+
+}
+
