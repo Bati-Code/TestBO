@@ -5,7 +5,12 @@
     justify-content: space-between;
 }
 
+#content #search_label #search_form{
+    display: flex;
+    align-items: center;
+
+}
+
 #content #search_label #search_form > span{
     margin-left: 5px;
 }
-

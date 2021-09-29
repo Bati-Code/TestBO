@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux'
 
 import Reducer from "./redux/store/combine_reducer";
+import "antd/dist/antd.css";
 
 const devTools =
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({ trace: true, traceLimit: 25 });

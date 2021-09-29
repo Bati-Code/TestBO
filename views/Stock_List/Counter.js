@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Table } from 'antd';
+import { Table, Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons'
 
 import './css/Stock_List.css'
+import { Address_Config } from '../Data/Config/Config';
 
 
 const Counter = () => {
@@ -14,7 +16,7 @@ const Counter = () => {
 
     const [getData, setData] = useState([]);
     const [getSearchValue, setSearchValue] = useState(initSearch);
-
+    const { Search } = Input;
 
     useEffect(() => {
 
@@ -24,10 +26,13 @@ const Counter = () => {
 
     const getList = () => {
         console.log("axios value", getSearchValue);
-        axios.post('http://localhost:8001/test', getSearchValue)
+        axios.post(Address_Config.dev_server + 'test', getSearchValue)
             .then((res) => {
-                console.log(res.data);
-                setData(res.data);
+                if (res) {
+                    console.log(res.data);
+                    setData(res.data);
+                }
+
             })
             .catch((error) => {
                 if (error.response) {
@@ -36,29 +41,30 @@ const Counter = () => {
                     console.log("err.data", error.response.data);
                     console.log("err.status", error.response.status);
                     console.log("err.headers", error.response.headers);
+                    return;
                 }
                 else if (error.request) {
                     // 요청이 이루어 졌으나 응답을 받지 못했습니다.
                     // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
                     // Node.js의 http.ClientRequest 인스턴스입니다.
                     console.log("요청이 이루어 졌으나 응답을 받지 못했습니다.", error.request);
+                    return;
                 }
                 else {
                     // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-                    console.log('오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.', error.message);
+                    console.log('오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.', error.message, error);
+                    return;
                 }
-                console.log("err", error.config);
             })
     }
 
     const resetList = () => {
         console.log("axios value", initSearch);
-        axios.post('http://localhost:8001/test', initSearch)
+        axios.post(Address_Config.dev_server + 'test', initSearch)
             .then((res) => {
                 console.log(res.data);
                 setData(res.data);
             })
-
     }
 
     const column = [
@@ -75,7 +81,7 @@ const Counter = () => {
         {
             title: 'Y/N',
             dataIndex: 'use_yn',
-            key: 'use_yn',
+            key: 'stock_name',
         }
     ]
 
@@ -112,12 +118,14 @@ const Counter = () => {
                 <div id="search_label">
                     <div id="search_form">
                         <span>
-                            종목코드 : <input name="stock_code" value={getSearchValue.stock_code}
-                                onChange={searchValue_Change_Handler} onKeyPress={search_Input_Key_Handler}></input>
+                            <Input placeholder="종목코드" prefix={<SearchOutlined />} />
+                            {/* 종목코드 : <input name="stock_code" value={getSearchValue.stock_code}
+                                onChange={searchValue_Change_Handler} onKeyPress={search_Input_Key_Handler}></input> */}
                         </span>
                         <span>
-                            종목명 : <input name="stock_name" value={getSearchValue.stock_name}
-                                onChange={searchValue_Change_Handler} onKeyPress={search_Input_Key_Handler}></input>
+                            <Input placeholder="종목명" prefix={<SearchOutlined />} />
+                            {/* 종목명 : <input name="stock_name" value={getSearchValue.stock_name}
+                                onChange={searchValue_Change_Handler} onKeyPress={search_Input_Key_Handler}></input> */}
                         </span>
                         <span>
                             <button onClick={searchButton_Handler}>Search</button>
