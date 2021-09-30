@@ -1,9 +1,14 @@
 import React from 'react'
 import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 
 const LayoutMenu = () => {
 
     const { SubMenu } = Menu;
+
+    const MenuClick_Hanlder = (e) => {
+        console.log('MenuClicked', e);
+    }
 
 
 
@@ -11,9 +16,10 @@ const LayoutMenu = () => {
         <>
             <Menu
                 theme="dark"
-                mode="inline">
-                <SubMenu key="a" title="a">
-                    <Menu.Item>aa</Menu.Item>
+                mode="inline"
+                onClick = {MenuClick_Hanlder}>
+                <SubMenu key="a" title="Analysis">
+                    <Menu.Item><Link to="Expert_Analysis">전문가 분석</Link></Menu.Item>
                     <Menu.Item>aa</Menu.Item>
                     <Menu.Item>aa</Menu.Item>
                 </SubMenu>

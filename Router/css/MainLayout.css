@@ -14,6 +14,7 @@
 
 #header #logo{
     width: 20%;
+    min-width: 180px;
     border-right: 2.3px solid;
     border-color: #f0f0f0;
     text-align: center;
@@ -39,12 +40,14 @@
 
 #container #body #side{
     min-height: 100%;
-    background-color: #001529;
     width: 20%;
+    min-width: 180px;
+    background-color: #001529;
 }
 
 #container #body #content{
     width: 80%;
+    height: 85%;
     margin: 5px;
     padding: 5px;
 }
