@@ -134,9 +134,6 @@ const Counter = () => {
                             <button onClick={resetButton_Handler}>Reset</button>
                         </span>
                     </div>
-                    <div id="login_form">
-                        <button >로그인</button>
-                    </div>
                 </div>
                 <div>
                     <Table dataSource={getData} columns={column}></Table>

@@ -1,31 +1,33 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ResponsiveLine } from '@nivo/line'
 import loadsh, { cloneDeep } from 'lodash';
-import * as echarts from 'echarts';
 import { Address_Config } from '../Data/Config/Config';
+import { Make_Chart } from '../Util/CommonUtil';
+
+import { Input, Select } from 'antd';
+import './css/Expert_AnalysisCSS.css'
+
 
 
 const Expert_Analysis = () => {
 
-    const initData = [
-        {
-            'id': '',
-            'data': []
-        }
-    ]
-
     const data_x = [];
     const data_y = [];
 
-    const [getAnalysis_Data, setAnalysis_Data] = useState(initData);
-    const [getList, setList] = useState({});
-    const [get_data_x, set_data_x] = useState([]);
-    const [get_data_y, set_data_y] = useState([]);
+    const { Search } = Input;
+    const { Option } = Select;
+
+    const [get_Expertname, set_Expertname] = useState('강남선비');
+    const [get_GraphType, set_GraphType] = useState('bar');
+
 
     useEffect(() => {
+        console.log(get_Expertname, "   :  ", get_GraphType);
+        getGraph(get_Expertname, get_GraphType);
+    }, [get_Expertname, get_GraphType])
 
-        axios.post(Address_Config.dev_server + 'ExpertAnalysis', { expert_nickname: "강남선비" })
+    const getGraph = (search_data, search_type) => {
+        axios.post(Address_Config.dev_server + 'ExpertAnalysis', { expert_nickname: search_data })
             .then((response) => {
                 const list = cloneDeep(response.data);
                 list.map((item) => {
@@ -33,108 +35,37 @@ const Expert_Analysis = () => {
                     data_x.push(item.gko_date);
                     data_y.push(item.order_count);
                 })
-                console.log("Copy", list);
-                console.log("Original", response.data);
 
-                console.log("dataX", data_x);
-                console.log("dataY", data_y);
-                setList({ x: data_x, y: data_y });
-
-                    // const Chart = echarts.init(document.getElementById("content"));
-                    // Chart.setOption({
-                    //     title: {
-                    //         text: '주문'
-                    //     },
-                    //     tooltip: {},
-                    //     xAxis: {
-                    //         data: data_x,
-                    //         boundaryGap: [0, '10%'],
-                    //     },
-                    //     yAxis: {
-                    //         type: 'value',
-                    //     },
-                    //     dataZoom: [
-                    //         {
-                    //             type: 'inside',
-                    //             start: 0,
-                    //             end: 10,
-                    //             height: '10%'
-                    //         },
-                    //         {
-                    //             start: 0,
-                    //             end: 10
-                    //         }
-                    //     ],
-                    //     series: [
-                    //         {
-                    //             name: 'sales',
-                    //             type: 'bar',
-                    //             smmoth: 'true',
-                    //             sampling: 'average',
-                    //             symbol: 'none',
-                    //             itemStyle: {
-                    //                 color: 'rgb(255, 70, 131)'
-                    //             },
-                    //             data: data_y
-
-                    //         }
-                    //     ]
-                    // });
-
-                // Make_Chart('test', 'line', data_x, data_y, 'data', 'rgb(255, 70, 0)');/
+                Make_Chart(search_data, search_type, data_x, data_y, '주문', 'rgb(255, 70, 0)');
             })
-
-       
-
-    }, [])
-
-    const Make_Chart = (title, Chart_Type, data_X, data_Y, data_name, color) => {
-        const Chart = echarts.init(document.getElementById("content"));
-        Chart.setOption({
-            title: {
-                text: { title }
-            },
-            tooltip: {},
-            xAxis: {
-                data: { data_X },
-                boundaryGap: [0, '10%'],
-            },
-            yAxis: {
-                type: 'value',
-            },
-            dataZoom: [
-                {
-                    type: 'inside',
-                    start: 0,
-                    end: 10,
-                    height: '10%'
-                },
-                {
-                    start: 0,
-                    end: 10
-                }
-            ],
-            series: [
-                {
-                    name: { data_name },
-                    type: { Chart_Type },
-                    smmoth: 'true',
-                    sampling: 'average',
-                    symbol: 'none',
-                    itemStyle: {
-                        color: { color }
-                    },
-                    data: { data_Y }
-
-                }
-            ]
-        });
     }
+
+    const expert_Graph_Search_Handler = (value) => {
+        console.log(value);
+        set_Expertname(value);
+    }
+
+    const Graph_Type_Select_Handler = (value) => {
+        console.log(`selected ${value}`);
+        set_GraphType(value);
+    }
+
 
 
 
     return (
         <>
+            <div id="Graph_SearchForm">
+                <div>
+                    <Search placeholder="전문가 검색" onSearch={expert_Graph_Search_Handler} />
+                </div>
+                <div>
+                    <Select defaultValue="bar" onChange={Graph_Type_Select_Handler}>
+                        <Option value="bar">막대 그래프</Option>
+                        <Option value="line">선형 그래프</Option>
+                    </Select>
+                </div>
+            </div>
         </>
     )
 }
