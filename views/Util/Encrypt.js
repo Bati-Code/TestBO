@@ -43,8 +43,8 @@ export const Encrypt_Login = async (registerData, dispatch) => {
                 result = false;
             }
             else {
-                Cookies.set('Access_Token', response.data.access);
-                Cookies.set('Refresh_Token', response.data.refresh);
+                Cookies.set('Access_Token', response.data.access, {sameSite: 'lax', secure: 'true'});
+                Cookies.set('Refresh_Token', response.data.refresh, {sameSite: 'lax', secure: 'true'});
 
                 result = true;
             }

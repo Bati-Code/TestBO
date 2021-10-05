@@ -1,0 +1,22 @@
+#SMS_Wrap div{
+    margin-bottom: 10px;
+}
+
+#SMS_Wrap #input_Wrap Input{
+    margin-bottom: 10px;
+    padding: 9px 8px 8px 10px;
+}
+
+#phone_list{
+    border: 1px solid black;
+    min-height: 50px;
+    margin: 15px 0 15px 0;
+}
+
+#phone_list div{
+    margin: 5px 0 5px 0;
+}
+
+#phone_list span{
+    margin: 0 10px 0 10px;
+}
