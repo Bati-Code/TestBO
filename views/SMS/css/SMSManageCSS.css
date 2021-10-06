@@ -7,6 +7,15 @@
     padding: 9px 8px 8px 10px;
 }
 
+#SMS_Wrap #Button_Wrap {
+    width: 100%;
+    display: flex;
+}
+
+#Button_Wrap #Left_Wrap, #Right_Wrap {
+    width: 100%;
+}
+
 #phone_list{
     border: 1px solid black;
     min-height: 50px;
@@ -19,4 +28,7 @@
 
 #phone_list span{
     margin: 0 10px 0 10px;
+}
+.white .input{
+    
 }
