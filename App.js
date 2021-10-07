@@ -9,8 +9,6 @@ import { Address_Config } from "./views/Data/Config/Config";
 import ErrorHandler from "./views/Data/ErrorHandler/ErrorHandler";
 import { Interceptor } from './views/Data/Interceptor/Interceptor'
 
-
-
 const App = () => {
 
 	//InterceptorA(axios);

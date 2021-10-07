@@ -1,13 +1,18 @@
-import { Button, DatePicker, Input, Select, Table, TimePicker } from 'antd'
+import { Button, DatePicker, Input, Table, TimePicker } from 'antd'
 import axios from 'axios'
-import moment from 'moment'
+import moment, { now } from 'moment'
 import React, { useEffect, useState } from 'react'
+
 import { Address_Config } from '../Data/Config/Config'
 import { set_JSON_State_Data } from '../Util/CommonUtil'
 import { Column_Data } from './SMSColumn'
-
 import './css/SMSManageCSS.css'
-import { Option } from 'antd/lib/mentions'
+import { SelectFunc } from '../../Item/SelectItem'
+import { Box, TextField, Typography } from '@mui/material'
+import { DateRangePicker, LocalizationProvider } from '@mui/lab'
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+
+import koLocale from 'date-fns/locale/ko';
 
 const SMSManage = () => {
 
@@ -21,6 +26,20 @@ const SMSManage = () => {
         reservation_time: ''
     }
 
+    const search_input_init_data = {
+        sender: '',
+        receiver: '',
+        msg: ''
+    }
+
+    const select_init_data = {
+        type_data: 'ALL',
+        telecom_data: 'ALL',
+        success_data: 'ALL'
+    }
+
+
+
     const [get_input_data, set_input_data] = useState(input_data);
     const [get_input_List_data, set_input_List_data] = useState('');
     const [get_input_List, set_input_List] = useState([]);
@@ -29,10 +48,12 @@ const SMSManage = () => {
     const [get_List_Table_Loading, set_List_Table_Loading] = useState(false);
     const [get_Money, set_Money] = useState({ sms_CNT: 0, lms_CNT: 0, mms_CNT: 0 });
 
+    const [get_Search_Input_Data, set_Search_Input_Data] = useState(search_input_init_data);
+    const [get_Select_Data, set_Select_Data] = useState(select_init_data);
+    const [get_Date, set_Date] = useState([moment().date(1).format('YYYY/MM/DD'), moment().format('YYYY/MM/DD')]);
+
 
     useEffect(() => {
-
-
     }, [])
 
     const SMS_Input_Handler = ({ target }) => {
@@ -139,7 +160,7 @@ const SMSManage = () => {
         set_List_Table_Loading(true);
         axios.get(Address_Config.dev_server + 'SMSDetailTotal')
             .then((response) => {
-                //console.log(response.data.list);
+                console.log(response.data.list);
                 set_List_Table_Loading(false);
                 set_List_Table_Column(Column_Data.column_Detail_total);
                 set_List_Table_data(response.data);
@@ -158,6 +179,31 @@ const SMSManage = () => {
         set_JSON_State_Data(get_input_data, set_input_data, { reservation_time: timeString });
     }
 
+    //Search_Input_Handler
+    const Search_Input_Handler = (e) => {
+        console.log(e.target);
+        set_JSON_State_Data(get_Search_Input_Data, set_Search_Input_Data, { [e.target.id]: e.target.value });
+    }
+
+    //SelectHandler
+    const selectHandler = (e) => {
+        console.log(e.target);
+        set_JSON_State_Data(get_Select_Data, set_Select_Data, { [e.target.name]: e.target.value });
+    }
+
+    //검색
+    const DetailList_Search_Handler = () => {
+
+        axios.post(Address_Config.dev_server + 'listDetailSearch',
+            {
+                'select_data': get_Select_Data,
+                'input_data': get_Search_Input_Data,
+                'search_date_data': get_Date.toString()
+            })
+            .then((response) => {
+                console.log(response.data);
+            })
+    }
 
     return (
         <>
@@ -221,28 +267,74 @@ const SMSManage = () => {
                 <div>
                     잔고 ----  SMS : {get_Money.sms_CNT} LMS : {get_Money.lms_CNT} MMS : {get_Money.mms_CNT}
                 </div>
-                <div>
+                <div id="SMS_Search_Wrap">
                     {/* 문자내용 조회일, 발신번호, 수신번호, 문자종류, 통신사, 발송결과,  */}
                     <div>
-                        <Select defaultValue="ALL">
-                            <Option value="ALL">ALL</Option>
-                        </Select>
-                        <Input placeholder="발신번호" />
-                        <Input placeholder="수신번호" />
-                        TYPE
-                        <Select defaultValue="ALL" >
-                            <Option value="ALL">ALL</Option>
-                        </Select>
+                        <SelectFunc
+                            id="select-helper"
+                            value={get_Select_Data.type_data}
+                            name="type_data"
+                            label="Type"
+                            onChange={selectHandler}
+                            item={["ALL", "SMS", "LMS", "MMS"]} />
+                        <SelectFunc
+                            id="select-helper"
+                            value={get_Select_Data.telecom_data}
+                            name="telecom_data"
+                            label="Telecom"
+                            onChange={selectHandler}
+                            item={["ALL", "SKT", "KTF", "LGF", "ETC"]} />
+                        <SelectFunc
+                            id="select-helper"
+                            value={get_Select_Data.success_data}
+                            name="success_data"
+                            label="전송 여부"
+                            onChange={selectHandler}
+                            item={["ALL", "성공", "실패", "미처리"]} />
                     </div>
                     <div>
-                        <Table dataSource={get_List_Table_data.list} columns={get_List_Table_Column}
-                            loading={get_List_Table_Loading}
-                            onRow={(record, rowIndex) => (
-                                {
-                                    onClick: (event) => { console.log(record, rowIndex) }
-                                }
-                            )} />
+                        <Input id='sender' placeholder="발신번호" onChange={Search_Input_Handler} />
+                        <Input id='receiver' placeholder="수신번호" onChange={Search_Input_Handler} />
+                        <Input id='msg' placeholder="문자 내용" onChange={Search_Input_Handler} />
                     </div>
+                    <div>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} locale={koLocale}>
+                            <div>
+                                <Typography sx={{ mt: 2, mb: 1 }}>조회</Typography>
+                                <DateRangePicker
+                                    calendars={2}
+                                    inputFormat="yyyy/MM/dd"
+                                    toolbarFormat="yyyy/MM/dd"
+                                    mask="____/__/__"
+                                    value={get_Date}
+                                    onChange={(newValue) => {
+                                        console.log("VALUE", newValue);
+                                        set_Date(newValue);
+                                    }}
+
+                                    renderInput={(startProps, endProps) => (
+                                        <>
+                                            <TextField {...startProps} />
+                                            <Box sx={{ mx: 2 }}> to </Box>
+                                            <TextField {...endProps} />
+                                        </>
+                                    )}
+                                />
+                            </div>
+                        </LocalizationProvider>
+                    </div>
+                    <div>
+                        <Button onClick={DetailList_Search_Handler}>검색</Button>
+                    </div>
+                </div>
+                <div>
+                    <Table dataSource={get_List_Table_data.list} columns={get_List_Table_Column}
+                        loading={get_List_Table_Loading}
+                        onRow={(record, rowIndex) => (
+                            {
+                                onClick: (event) => { console.log(record, rowIndex) }
+                            }
+                        )} />
                 </div>
             </div>
         </>
