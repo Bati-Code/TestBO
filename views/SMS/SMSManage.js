@@ -194,15 +194,29 @@ const SMSManage = () => {
     //검색
     const DetailList_Search_Handler = () => {
 
+        set_List_Table_Loading(true);
         axios.post(Address_Config.dev_server + 'listDetailSearch',
             {
                 'select_data': get_Select_Data,
                 'input_data': get_Search_Input_Data,
-                'search_date_data': get_Date.toString()
+                'search_date_data': {date: get_Date.toString()}
             })
             .then((response) => {
                 console.log(response.data);
+                console.log(response.data.list);
+                set_List_Table_Loading(false);
+                set_List_Table_Column(Column_Data.column_Detail_total);
+                set_List_Table_data(response.data);
             })
+    }
+
+    //DB
+    const Send_DB_SMS_Button_Handler = () => {
+
+        axios.get(Address_Config.dev_server + 'dbSend')
+        .then((response) => {
+            console.log(response.data);
+        })
     }
 
     return (
@@ -245,6 +259,10 @@ const SMSManage = () => {
                         </div>
                         <div>
                             <Button onClick={SMS_Detail_Analysis_Button_Handler}>상세 전송 통계</Button>
+                        </div>
+                        <div>--</div><div>--</div>
+                        <div>
+                            <Button onClick={Send_DB_SMS_Button_Handler} disabled>DB SMS 전송</Button>
                         </div>
 
                     </div>
